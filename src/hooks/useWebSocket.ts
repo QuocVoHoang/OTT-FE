@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { API_SERVER } from "@/lib/constants";
 
 const useWebSocket = (userId: string) => {
   const protocol = typeof window !== "undefined" && window.location.protocol === "https:" ? "wss" : "ws"
@@ -15,7 +16,7 @@ const useWebSocket = (userId: string) => {
 
   const getCurrentConversationMessages = async (conversationId: string) => {
     if (conversationId) {
-      const response = await axios.get(`http://127.0.0.1:8000/message/conversation/${conversationId}`)
+      const response = await axios.get(`${API_SERVER}/message/conversation/${conversationId}`)
       setMessages(response.data)
     }
   };

@@ -8,24 +8,21 @@ import { RootState } from "@/lib/redux/store"
 import { useSelector } from "react-redux"
 import { API_SERVER } from "@/lib/constants"
 
-const useConversation = () => {
+const useUser = () => {
 
-  const createNewGroupChat = async(groupName: string, participants: string[]) => {
+  const getIdFromUserMailPhone = async(identifier: string) => {
     try {
-      const endpoint = `${API_SERVER}/conversation/create-conversation`
-      const response = await axios.post(endpoint, {
-        name: groupName, 
-        participants: participants
-      })
-      console.log('response', response.data)
+      const endpoint = `${API_SERVER}/user/get-user`
+      const response = await axios.get(`${endpoint}/${identifier}`)
+      return response.data.uid
     } catch(e) {
       console.error(e)
     }
   }
 
   return {
-    createNewGroupChat
+    getIdFromUserMailPhone
   }
 }
 
-export default useConversation
+export default useUser

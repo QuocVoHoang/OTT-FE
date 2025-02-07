@@ -1,10 +1,9 @@
 import axios from "axios";
-
-const API_BASE_URL = "http://127.0.0.1:8000"
+import { API_SERVER } from "../constants";
 
 export const registerUserByEmail = async (email?: string, password?: string) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/user/create-user/email`, {
+    const response = await axios.post(`${API_SERVER}/user/create-user/email`, {
       email,
       password
     });
@@ -26,7 +25,7 @@ const fetchProtectedData = async () => {
   }
 
   try {
-    const response = await axios.get(`${API_BASE_URL}/user/protected-route/`, {
+    const response = await axios.get(`${API_SERVER}/user/protected-route/`, {
       headers: { Authorization: `Bearer ${token}` },
     })
   } catch (error) {
@@ -37,7 +36,7 @@ const fetchProtectedData = async () => {
 
 export const handleLogin = async (email: string, password: string) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/user/login-email/`, { email, password });
+    const response = await axios.post(`${API_SERVER}/user/login-email/`, { email, password });
     const { idToken } = response.data;
 
     localStorage.setItem("token", idToken);
@@ -59,7 +58,7 @@ export const handleLogout = async () => {
   }
 
   try {
-    await axios.post(`${API_BASE_URL}/user/logout/`, {}, {
+    await axios.post(`${API_SERVER}/user/logout/`, {}, {
       headers: { Authorization: `Bearer ${token}` },
     })
   } catch (error) {

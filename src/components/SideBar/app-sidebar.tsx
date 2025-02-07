@@ -27,6 +27,8 @@ import { RootState } from "@/lib/redux/store";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Box, Button } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
+import CreateGroupDialog from "../CreateGroupDialog/CreateGroupDialog";
+import { API_SERVER } from "@/lib/constants";
 
 
 const navMain = [
@@ -54,7 +56,7 @@ export function AppSidebar({ setCurrentConversationId, ...props }: AppSidebarPro
 
   const getUserConversations = async() => {
     if(userId) {
-      const response = await axios.get(`http://127.0.0.1:8000/conversation/user/${userId}`)
+      const response = await axios.get(`${API_SERVER}/conversation/user/${userId}`)
       setConversations(response.data)
     }
   }
@@ -159,18 +161,8 @@ export function AppSidebar({ setCurrentConversationId, ...props }: AppSidebarPro
               </SidebarGroupContent>}
             </SidebarGroup>
             
-            {activeItem == navMain[0] &&
-              <Button
-                sx={{
-                  width: "100%"
-                }}
-                onClick={() => {}}
-              >
-                CREATE GROUP
-              </Button>
-            }
+            {activeItem == navMain[0] && <CreateGroupDialog />}
           </Box>
-
         </SidebarContent>
       </Sidebar>
     </Sidebar>

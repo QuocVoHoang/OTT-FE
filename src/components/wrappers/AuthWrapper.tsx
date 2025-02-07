@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "@/lib/redux/store";
 import { setUserInformation } from "@/lib/redux/userSlice";
 import axios from "axios"
+import { API_SERVER } from "@/lib/constants";
 
 export default function AuthWrapper({children}:{children: React.ReactNode}){
   const router = useRouter()
@@ -21,16 +22,13 @@ export default function AuthWrapper({children}:{children: React.ReactNode}){
       else {
         router.push("/signin")
       }
-      console.log("NOOOOOOOOOOOO TOKENNNNNNNNN")
     } else {
-      console.log('HAVEEEEEEEE TOKENNNNNNNNNN')
-      const API_BASE_URL = "http://127.0.0.1:8000"
       axios
-        .get(`${API_BASE_URL}/user/protected-route/`, {
+        .get(`${API_SERVER}/user/protected-route/`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then(async() => {
-          const response = await axios.get("http://127.0.0.1:8000/user/get-user-by-token/", {
+          const response = await axios.get(`${API_SERVER}/user/get-user-by-token/`, {
             headers: { Authorization: `Bearer ${token}` },
           })
 
@@ -43,7 +41,6 @@ export default function AuthWrapper({children}:{children: React.ReactNode}){
             }))
           }
         })
-      console.log('sign in')
       router.push("/")
     }
   }, [router, pathname])
