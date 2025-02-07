@@ -14,10 +14,16 @@ export default function AuthWrapper({children}:{children: React.ReactNode}){
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token")
 
     if (!token) {
+      if(pathname === '/sigin' || pathname === '/signup'){}
+      else {
+        router.push("/signin")
+      }
+      console.log("NOOOOOOOOOOOO TOKENNNNNNNNN")
     } else {
+      console.log('HAVEEEEEEEE TOKENNNNNNNNNN')
       const API_BASE_URL = "http://127.0.0.1:8000"
       axios
         .get(`${API_BASE_URL}/user/protected-route/`, {
@@ -26,7 +32,7 @@ export default function AuthWrapper({children}:{children: React.ReactNode}){
         .then(async() => {
           const response = await axios.get("http://127.0.0.1:8000/user/get-user-by-token/", {
             headers: { Authorization: `Bearer ${token}` },
-          });
+          })
 
           if(response.data) {
             dispatch(setUserInformation({
@@ -37,11 +43,10 @@ export default function AuthWrapper({children}:{children: React.ReactNode}){
             }))
           }
         })
-        .catch(() => {
-          localStorage.removeItem("token")
-        })
+      console.log('sign in')
+      router.push("/")
     }
-  }, [router])
+  }, [router, pathname])
 
   return(
     <div>

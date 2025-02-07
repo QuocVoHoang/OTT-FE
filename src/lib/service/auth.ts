@@ -2,17 +2,14 @@ import axios from "axios";
 
 const API_BASE_URL = "http://127.0.0.1:8000"
 
-export const registerUser = async (email?: string, password?: string, phoneNumber?: string) => {
+export const registerUserByEmail = async (email?: string, password?: string) => {
   try {
-    console.log("email", email)
-    console.log("password", password)
-    console.log("phoneNumber", phoneNumber)
-    const response = await axios.post(`${API_BASE_URL}/user/create-user/`, {
+    const response = await axios.post(`${API_BASE_URL}/user/create-user/email`, {
       email,
-      password,
-      phone_number: phoneNumber
+      password
     });
-    return response.data;
+    
+    handleLogin(email!, password!)
   } catch (error) {
     throw new Error("Registration failed");
   }

@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
-import { registerUser } from "@/lib/service/auth"
+import { registerUserByEmail } from "@/lib/service/auth"
 import { Mail, Phone } from 'lucide-react'
 import { useRouter } from "next/navigation"
 
@@ -21,8 +21,7 @@ export function SignupForm({
         data.email = email;
         data.password = password;
       }
-      const response = await registerUser(data.email, data.password)
-      router.push("/")
+      await registerUserByEmail(data.email, data.password)
     } catch (error) {
     }
   }
